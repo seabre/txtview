@@ -29,4 +29,4 @@ end
 get '/txt/:txt' do
     @txt = Sanitize.clean(inflate(urlsafe_decode_base64(params[:txt])))
     erb :txt
-  end
+end
