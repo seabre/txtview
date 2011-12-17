@@ -2,9 +2,18 @@ require 'bundler/setup'
 require 'sinatra'
 require 'base64'
 require 'sanitize'
+require 'zlib'
 
 def urlsafe_decode_base64(data)
   return data.tr('-_','+/').unpack('m')[0]
+end
+
+def inflate(data)
+  zstream = Zlib::Inflate.new
+  buf = zstream.inflate(string)
+  zstream.finish
+  zstream.close
+  return buf
 end
 
 error do
@@ -18,6 +27,6 @@ get '/' do
 end
   
 get '/txt/:txt' do
-    @txt = Sanitize.clean(urlsafe_decode_base64(params[:txt]))
+    @txt = Sanitize.clean(inflate(urlsafe_decode_base64(params[:txt])))
     erb :txt
   end
