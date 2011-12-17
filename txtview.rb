@@ -1,5 +1,7 @@
+require 'bundler/setup'
 require 'sinatra'
 require 'base64'
+require 'sanitize'
 
 error do
   e = request.env['sinatra.error']
@@ -12,6 +14,6 @@ get '/' do
 end
   
 get '/txt/:txt' do
-    @txt = Base64.decode64(params[:txt])
+    @txt = Sanitize.clean(Base64.decode64(params[:txt]))
     erb :txt
   end
