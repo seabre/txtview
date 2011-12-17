@@ -13,7 +13,7 @@ get '/' do
   erb :index
 end
   
-get '/txt/:txt' do
-    @txt = Sanitize.clean(Base64.decode64(params[:txt]))
+get '/txt/*' do
+    @txt = Sanitize.clean(Base64.decode64(params[:splat][0]))
     erb :txt
   end
