@@ -10,7 +10,7 @@ end
 
 def inflate(data)
   zstream = Zlib::Inflate.new
-  buf = zstream.inflate(string)
+  buf = zstream.inflate(data)
   zstream.finish
   zstream.close
   return buf
