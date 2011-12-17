@@ -14,6 +14,6 @@ get '/' do
 end
   
 get '/txt/*' do
-    @txt = Sanitize.clean(Base64.decode64(params[:splat][0]))
+    @txt = Sanitize.clean(Base64.decode64(params[:splat].join()))
     erb :txt
   end
