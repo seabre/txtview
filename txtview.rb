@@ -3,6 +3,10 @@ require 'sinatra'
 require 'base64'
 require 'sanitize'
 
+def urlsafe_decode_base64(data)
+  return data.tr('-_','+/').unpack('m')[0]
+end
+
 error do
   e = request.env['sinatra.error']
   Kernel.puts e.backtrace.join("\n")
@@ -14,10 +18,6 @@ get '/' do
 end
   
 get '/txt/:txt' do
-    begin
-    @txt = Sanitize.clean(Base64.urlsafe_decode64(params[:splat].join()))
+    @txt = Sanitize.clean(urlsafe_decode_base64(params[:txt]))
     erb :txt
-    rescue
-      404
-    end
   end
